@@ -1,0 +1,30 @@
+[
+  {
+    "Command": "Find-Project -owner githubcustomers -pattern creator:testuser",
+    "FileName": "testuser-find-project.json"
+  },
+  {
+    "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 3023",
+    "FileName": "get-projectitems-githubcustomers-3023.json"
+  },
+  {
+    "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 2683",
+    "FileName": "get-projectitems-githubcustomers-2683.json"
+  },
+  {
+    "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 2988",
+    "FileName": "get-projectitems-githubcustomers-2988.json"
+  },
+  {
+    "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 2683 -IncludeDone",
+    "FileName": "get-projectitems-githubcustomers-2683.json"
+  },
+  {
+    "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 2988 -IncludeDone",
+    "FileName": "get-projectitems-githubcustomers-2988.json"
+  },
+  {
+    "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 3023 -IncludeDone",
+    "FileName": "get-projectitems-githubcustomers-3023.json"
+  }
+]
