@@ -26,5 +26,9 @@
   {
     "Command": "Get-ProjectItems -owner githubcustomers -projectNumber 3023 -IncludeDone",
     "FileName": "get-projectitems-githubcustomers-3023.json"
+  },
+  {
+    "FileName": "testuser-search-repos.json",
+    "Command": "Invoke-SearchRepo -SearchString \"org:githubcustomers props.SolutionEngineer:testuser\""
   }
 ]

@@ -1,6 +1,7 @@
 function Test_GetProjectItems_Success{
 
     MockCall_GetAllItems
+    MockCall_GetGcReposMy
 
     # All 
     # Act
@@ -52,7 +53,10 @@ function GetMockFiles($ProjectNumber){
 
 function MockCall_GetAllItems{
 
+    # GetMyHandle
     MockCallToString -Command 'gh api user --jq ".login"' -OutString 'testuser'
+    
+    # Get-AllItems
     MockCallJson -Command "Find-Project -owner githubcustomers -pattern creator:testuser" -filename "testuser-find-project-3.json"
     MockCall_GetProject 2683 ; MockCall_GetProject 2988 ; MockCall_GetProject 3023
 
