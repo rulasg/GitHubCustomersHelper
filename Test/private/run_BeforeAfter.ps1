@@ -22,7 +22,7 @@ function Run_BeforeEach{
     
     Invoke-PrivateContext {
         # Clear the repo list cache to ensure tests are isolated
-        $script:projectlist = $null 
+        $script:projectlist = $null
         $script:repoList = @{}
     }
 }
