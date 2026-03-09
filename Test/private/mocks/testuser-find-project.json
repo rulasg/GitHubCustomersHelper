@@ -1,0 +1,312 @@
+[
+  {
+    "id": "PVT_kwDOAOnouM4BP70V",
+    "title": "microsoft-spain-internal",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3159,
+    "url": "https://github.com/orgs/githubcustomers/projects/3159",
+    "template": false,
+    "createdAt": "2026-02-23T13:24:08Z",
+    "updatedAt": "2026-02-23T13:24:08Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": []
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BPmq_",
+    "title": "microsoft-spain-internal",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3155,
+    "url": "https://github.com/orgs/githubcustomers/projects/3155",
+    "template": false,
+    "createdAt": "2026-02-19T11:24:47Z",
+    "updatedAt": "2026-02-19T11:24:47Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": []
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BPbzF",
+    "title": "indra-group",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3144,
+    "url": "https://github.com/orgs/githubcustomers/projects/3144",
+    "template": false,
+    "createdAt": "2026-02-17T14:55:39Z",
+    "updatedAt": "2026-02-17T15:06:03Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "indra-group",
+          "url": "https://github.com/githubcustomers/indra-group"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BO5UB",
+    "title": "santander-internal",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3137,
+    "url": "https://github.com/orgs/githubcustomers/projects/3137",
+    "template": false,
+    "createdAt": "2026-02-11T06:14:38Z",
+    "updatedAt": "2026-03-06T00:44:12Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "santander-internal",
+          "url": "https://github.com/githubcustomers/santander-internal"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BKdRD",
+    "title": "sw-se-team",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3075,
+    "url": "https://github.com/orgs/githubcustomers/projects/3075",
+    "template": false,
+    "createdAt": "2025-12-12T12:24:10Z",
+    "updatedAt": "2026-02-17T09:53:05Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": []
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BHTsP",
+    "title": "MAPFRE",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3042,
+    "url": "https://github.com/orgs/githubcustomers/projects/3042",
+    "template": false,
+    "createdAt": "2025-11-05T11:11:34Z",
+    "updatedAt": "2026-03-08T22:55:23Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "mapfre",
+          "url": "https://github.com/githubcustomers/mapfre"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BGWaF",
+    "title": "bbva-internal",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3034,
+    "url": "https://github.com/orgs/githubcustomers/projects/3034",
+    "template": false,
+    "createdAt": "2025-10-24T14:34:05Z",
+    "updatedAt": "2026-03-09T01:07:03Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "bbva-internal",
+          "url": "https://github.com/githubcustomers/bbva-internal"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BFJgO",
+    "title": "Customer_1",
+    "shortDescription": null,
+    "readme": null,
+    "number": 3023,
+    "url": "https://github.com/orgs/githubcustomers/projects/3023",
+    "template": false,
+    "createdAt": "2025-10-09T16:10:54Z",
+    "updatedAt": "2025-10-09T16:10:54Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": []
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BCTaN",
+    "title": "CaixaBank",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2989,
+    "url": "https://github.com/orgs/githubcustomers/projects/2989",
+    "template": false,
+    "createdAt": "2025-09-04T17:52:36Z",
+    "updatedAt": "2026-03-06T11:32:28Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "caixabank",
+          "url": "https://github.com/githubcustomers/caixabank"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BCTX_",
+    "title": "[TEMPLATE] Customer Project",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2988,
+    "url": "https://github.com/orgs/githubcustomers/projects/2988",
+    "template": true,
+    "createdAt": "2025-09-04T17:46:28Z",
+    "updatedAt": "2025-09-04T17:49:49Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": []
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4BBrCn",
+    "title": "BBVA",
+    "shortDescription": "SolutionEngineer @rulasg",
+    "readme": null,
+    "number": 2985,
+    "url": "https://github.com/orgs/githubcustomers/projects/2985",
+    "template": false,
+    "createdAt": "2025-08-28T11:04:46Z",
+    "updatedAt": "2026-03-09T01:06:59Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "bbva",
+          "url": "https://github.com/githubcustomers/bbva"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4AzN5W",
+    "title": "BiT21",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2683,
+    "url": "https://github.com/orgs/githubcustomers/projects/2683",
+    "template": false,
+    "createdAt": "2025-02-27T11:36:28Z",
+    "updatedAt": "2026-03-04T06:35:05Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "bit21",
+          "url": "https://github.com/githubcustomers/bit21"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4AzN5I",
+    "title": "Indra",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2682,
+    "url": "https://github.com/orgs/githubcustomers/projects/2682",
+    "template": false,
+    "createdAt": "2025-02-27T11:35:47Z",
+    "updatedAt": "2026-03-01T10:06:05Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "indra",
+          "url": "https://github.com/githubcustomers/indra"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4AzI72",
+    "title": "BBVA-Accenture",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2680,
+    "url": "https://github.com/orgs/githubcustomers/projects/2680",
+    "template": false,
+    "createdAt": "2025-02-26T13:00:51Z",
+    "updatedAt": "2026-03-01T10:04:42Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "bbva-accenture",
+          "url": "https://github.com/githubcustomers/bbva-accenture"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4Ayw_m",
+    "title": "Santander-Cybersecurity",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2671,
+    "url": "https://github.com/orgs/githubcustomers/projects/2671",
+    "template": false,
+    "createdAt": "2025-02-21T12:23:45Z",
+    "updatedAt": "2026-03-05T00:13:38Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "santander-cybersecurity",
+          "url": "https://github.com/githubcustomers/santander-cybersecurity"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4AwGnG",
+    "title": "Iberdrola",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2598,
+    "url": "https://github.com/orgs/githubcustomers/projects/2598",
+    "template": false,
+    "createdAt": "2025-01-15T12:31:02Z",
+    "updatedAt": "2026-02-23T13:15:23Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": [
+        {
+          "name": "iberdrola",
+          "url": "https://github.com/githubcustomers/iberdrola"
+        }
+      ]
+    }
+  },
+  {
+    "id": "PVT_kwDOAOnouM4AuHlc",
+    "title": "Inditex",
+    "shortDescription": null,
+    "readme": null,
+    "number": 2566,
+    "url": "https://github.com/orgs/githubcustomers/projects/2566",
+    "template": false,
+    "createdAt": "2024-12-11T11:01:01Z",
+    "updatedAt": "2025-10-02T07:26:08Z",
+    "closedAt": null,
+    "repositories": {
+      "nodes": []
+    }
+  }
+]
