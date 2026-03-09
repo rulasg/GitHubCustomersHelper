@@ -1,3 +1,6 @@
+
+class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidProjectNames}}
+
 function Get-GcProjectItems{
     [CmdletBinding()]
     [Alias ("scpi")]
@@ -13,15 +16,23 @@ function Get-GcProjectItems{
         # [Parameter()][switch]$AnyField,
         # [Parameter()][switch]$Exact
         
-        [Parameter()][string]$RepositoryName
+        [Parameter()][string]$RepositoryName,
+        [Parameter()][ValidateSet([ValidProjectNames])][string]$ProjectName
+        
         
     )
 
     $found = @((Get-AllItems -Force:$Force).Values)
 
+
     # Owner and ProjectNumber filtering
     if(-Not [string]::IsNullOrEmpty($Owner)){
         $found = @($found | Where-Object {$_.projectOwner -eq $Owner})
+    }
+
+    # ProjectName 
+    if(-Not [string]::IsNullOrEmpty($ProjectName)){
+        $projectnumber = (Get-GcProject -ProjectName $ProjectName).ProjectNumber
     }
 
     # ProjectNumber filtering    if(-Not [string]::IsNullOrEmpty($ProjectNumber)){
