@@ -7,7 +7,7 @@ Gets the GitHubCustomers repository owned by a particular SolutionEngineer
 .PARAMETER Handle
 The GitHub handle of the SolutionEngineer Custom Property value of the repository owner
 #>
-function Get-GCRepo {
+function Get-GcRepo {
     param (
         [Parameter(Mandatory,Position=0)][string]$PropertyValue,
         [Parameter()][string]$PropertyName = 'SolutionEngineer'
@@ -23,4 +23,4 @@ function Get-GCRepo {
 
     return $ret
 
-} Export-ModuleMember -Function Get-GCRepo
+} Export-ModuleMember -Function Get-GcRepo
