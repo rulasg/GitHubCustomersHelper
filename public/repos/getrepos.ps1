@@ -41,8 +41,11 @@ function Get-GcRepos {
         [Parameter()][switch]$Force
     )
 
-    $SearchString = "org:githubcustomers props.{property}:{value}"
+    $org = Get-OrgName
 
+    $SearchString = "org:{org} props.{property}:{value}"
+
+    $SearchString = $SearchString -replace '{org}', $org
     $SearchString = $SearchString -replace '{value}', $PropertyValue
     $SearchString = $SearchString -replace '{property}', $PropertyName
 

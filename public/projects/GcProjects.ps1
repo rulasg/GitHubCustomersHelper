@@ -16,7 +16,7 @@ function Get-GcProjects {
     }
 
     $me = Get-MyHandle
-    $owner = 'githubcustomers'
+    $owner = Get-OrgName
 
     $params = @{
         owner = $owner
