@@ -3,8 +3,6 @@ Set-MyInvokeCommandAlias -Alias SearchRepos -Command 'Invoke-SearchRepo -SearchS
 
 class ValidRepoNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidRepoNames}}
 
-$script:repoList = @{}
-
 function Get-GcReposMy{
     [CmdletBinding()]
     param(
@@ -13,14 +11,8 @@ function Get-GcReposMy{
 
     $handle = Get-MyHandle
 
-    if($null -ne $script:repoList.$handle -and -not $Force){
-        return $script:repoList.$handle
-    }
-
     $ret = Get-GcRepos -PropertyValue $handle -Force:$Force
-    
-    $script:repoList.$handle = $ret
-    
+
     return $ret
 
 } Export-ModuleMember -Function Get-GcReposMy
@@ -41,39 +33,52 @@ function Get-GcRepos {
         [Parameter()][switch]$Force
     )
 
-    $org = Get-OrgName
+    $Owner = Get-OrgName
 
-    $SearchString = "org:{org} props.{property}:{value}"
+    # Get cache
+    $cache = Get-GcDatabaseRepos -Owner $Owner -PropertyName $PropertyName -Handle $PropertyValue
 
-    $SearchString = $SearchString -replace '{org}', $org
-    $SearchString = $SearchString -replace '{value}', $PropertyValue
-    $SearchString = $SearchString -replace '{property}', $PropertyName
+    # check if empty
+    if($Force -or ! $cache){
 
-    $SearchString | Write-Verbose
+        $SearchString = "org:{org} props.{property}:{value}"
 
-    $response = Invoke-MyCommand -Command SearchRepos -Parameters @{searchstring=$SearchString}
+        $SearchString = $SearchString -replace '{org}', $Owner
+        $SearchString = $SearchString -replace '{value}', $PropertyValue
+        $SearchString = $SearchString -replace '{property}', $PropertyName
 
-    $ret = @{}
-    foreach($r in $response){
-        $n = [pscustomobject]@{
-            name = $r.name
-            url = $r.url
+        $SearchString | Write-Verbose
+
+        $response = Invoke-MyCommand -Command SearchRepos -Parameters @{searchstring=$SearchString}
+
+        $list = @{}
+        foreach($r in $response){
+            $n = [pscustomobject]@{
+                name = $r.name
+                url = $r.url
+            }
+            $list.$($r.name) = $n
         }
-        $ret.$($r.name) = $n
+
+        # Save to cache
+        Save-GcDatabaseRepos -Owner $Owner -PropertyName $PropertyName -Handle $PropertyValue -Value $list
+
+        $cache = Get-GcDatabaseRepos -Owner $Owner -PropertyName $PropertyName -Handle $PropertyValue
     }
 
-    return $ret
+    #return cache
+    return $cache
 
 } Export-ModuleMember -Function Get-GcRepos
 
 function Get-GcRepo{
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory,Position=0)][ValidateSet([ValidRepoNames])][string]$RepositoryName
+        [Parameter(Mandatory,Position=0)][ValidateSet([ValidRepoNames])][string]$Name
     )
 
     $repos = Get-GcReposMy
-    return $repos.$RepositoryName
+    return $repos.$Name
 } Export-ModuleMember -Function Get-GcRepo
 
 function Invoke-SearchRepo{
