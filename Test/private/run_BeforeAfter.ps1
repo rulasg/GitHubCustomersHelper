@@ -19,12 +19,7 @@
 function Run_BeforeEach{
     # Write-Verbose "Run_BeforeEach"
     Reset-InvokeCommandMock
-    
-    Invoke-PrivateContext {
-        # Clear the repo list cache to ensure tests are isolated
-        $script:projectlist = $null
-        $script:repoList = @{}
-    }
+    Mock_Database
 }
 
 # function Run_AfterEach{

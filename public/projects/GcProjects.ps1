@@ -2,8 +2,6 @@ Set-MyInvokeCommandAlias -Alias FindProjectByCreator -Command 'Find-Project -own
 
 class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidProjectNames}}
 
-$script:projectlist = $null
- 
 function Get-GcProjects {
     [CmdletBinding()]
     param(
@@ -11,43 +9,49 @@ function Get-GcProjects {
         [parameter()][switch]$Force
     )
 
-    if(! $Force -and $null -ne $script:projectlist){
-        return $script:projectlist
-    }
-
     $me = Get-MyHandle
-    $owner = 'githubcustomers'
+    $owner = Get-OrgName
 
     $params = @{
         owner = $owner
         handle = $me
     }
 
-    $result = Invoke-MyCommand -Command FindProjectByCreator -Parameters $params
+    $cache = Get-GcDatabaseProjects -Owner $owner -Handle $me
 
-    # Filter closed projects
-    # TODO: this filter is not working. Ignore the filter for the moment
-    # $filtered  = $result | Where-Object {$null -ne $_.closedAt}
-    $filtered = $result
+    if($Force -or ! $cache){
 
-    # Select attributes to return
-    $ret = @{}
-    
-    foreach($p in $filtered) {
-        $name = $p.title -replace '[^a-zA-Z0-9]', '_'
-        $n = [pscustomobject]@{
-            Title = $p.title
-            Owner = $owner
-            ProjectNumber = $p.number
-            Url = $p.url
+        
+        $result = Invoke-MyCommand -Command FindProjectByCreator -Parameters $params
+        
+        # Filter closed projects
+        # TODO: this filter is not working. Ignore the filter for the moment
+        # $filtered  = $result | Where-Object {$null -ne $_.closedAt}
+        $filtered = $result
+
+        # Select attributes to return
+        $list = @{}
+
+        foreach($p in $filtered) {
+            $name = $p.title -replace '[^a-zA-Z0-9]', '_'
+            $n = [pscustomobject]@{
+                Title = $p.title
+                Owner = $owner
+                ProjectNumber = $p.number
+                Url = $p.url
+            }
+
+            $list.$name= $n
         }
 
-        $ret.$name= $n
+        # Save to cache
+        Save-GcDatabaseProjects -Owner $owner -Handle $me -Value $list
+
+        $cache = Get-GcDatabaseProjects -Owner $owner -Handle $me
     }
 
-    $script:projectlist = $ret
     
-    return $ret
+    return $cache
 
 } Export-ModuleMember -Function Get-GcProjects
 
