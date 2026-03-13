@@ -5,10 +5,10 @@ class ValidRepoNames : System.Management.Automation.IValidateSetValuesGenerator 
 function Get-GcRepoCollaboratorsUrl{
     [cmdletbinding()]
     param(
-        [Parameter()][ValidateSet([ValidRepoNames])][string]$RepositoryName
+        [Parameter()][ValidateSet([ValidRepoNames])][string]$Name
     )
 
-    $repo = Get-GcRepo -RepositoryName $RepositoryName
+    $repo = Get-GcRepo -Name $Name
 
     $url = $repo.url + "/edit/main/.github/collaborators.yml"
 
