@@ -1,11 +1,13 @@
 Set-MyInvokeCommandAlias -Alias GetProjectItemStaged -Command 'Get-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
 Set-MyInvokeCommandAlias -Alias ShowProjectItemStaged -Command 'Show-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
+Set-MyInvokeCommandAlias -Alias ShowProjectItemStagedWithItemId -Command 'Show-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber} -Id {itemid}'
 Set-MyInvokeCommandAlias -Alias ResetProjectItemStaged -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
-Set-MyInvokeCommandAlias -Alias ResetProjectItemStagedWithItem -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber} -ItemId {itemid}'
+Set-MyInvokeCommandAlias -Alias ResetProjectItemStagedWithItem -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber} -Id {itemid}'
 
 
 function Get-GcProjectItemStaged{
     [cmdletbinding()]
+    [Alias("gcpis")]
     param()
 
     $gcp = Get-GcProjects
@@ -18,25 +20,33 @@ function Get-GcProjectItemStaged{
         Invoke-MyCommand -Command GetProjectItemStaged -Parameters $params
     }
 
-} Export-ModuleMember -Function Get-GcProjectItemStaged
+} Export-ModuleMember -Function Get-GcProjectItemStaged -Alias gcpis
 
 function Show-GcProjectItemStaged{
     [cmdletbinding()]
-    param()
+    [Alias("scpis")]
+    param(
+        [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
+    )
 
     $gcp = Get-GcProjects
 
     foreach($project in $gcp.Values){
-        
-        $params = @{owner=$project.Owner; projectnumber=$project.ProjectNumber}
-        
-        Invoke-MyCommand -Command ShowProjectItemStaged -Parameters $params
 
+        $params = @{owner=$project.Owner; projectnumber=$project.ProjectNumber}
+
+        if(-Not [string]::IsNullOrEmpty($ItemId)){
+            $params.itemid = $ItemId
+            Invoke-MyCommand -Command ShowProjectItemStagedWithItemId -Parameters $params
+        } else {
+            Invoke-MyCommand -Command ShowProjectItemStaged -Parameters $params
+        }
     }
-} Export-ModuleMember -Function Show-GcProjectItemStaged
+} Export-ModuleMember -Function Show-GcProjectItemStaged -Alias scpis
 
 function Reset-GcProjectItemStaged{
     [cmdletbinding()]
+    [Alias("rcpis")]
     param(
         [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
         )
@@ -55,4 +65,4 @@ function Reset-GcProjectItemStaged{
         }
     }
 
-} Export-ModuleMember -Function Reset-GcProjectItemStaged
+} Export-ModuleMember -Function Reset-GcProjectItemStaged -Alias rcpis
