@@ -1,0 +1,58 @@
+Set-MyInvokeCommandAlias -Alias GetProjectItemStaged -Command 'Get-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
+Set-MyInvokeCommandAlias -Alias ShowProjectItemStaged -Command 'Show-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
+Set-MyInvokeCommandAlias -Alias ResetProjectItemStaged -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
+Set-MyInvokeCommandAlias -Alias ResetProjectItemStagedWithItem -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber} -ItemId {itemid}'
+
+
+function Get-GcProjectItemStaged{
+    [cmdletbinding()]
+    param()
+
+    $gcp = Get-GcProjects
+
+
+    foreach($project in $gcp.Values){
+        
+        $params = @{owner=$project.Owner; projectnumber=$project.ProjectNumber}
+        
+        Invoke-MyCommand -Command GetProjectItemStaged -Parameters $params
+    }
+
+} Export-ModuleMember -Function Get-GcProjectItemStaged
+
+function Show-GcProjectItemStaged{
+    [cmdletbinding()]
+    param()
+
+    $gcp = Get-GcProjects
+
+    foreach($project in $gcp.Values){
+        
+        $params = @{owner=$project.Owner; projectnumber=$project.ProjectNumber}
+        
+        Invoke-MyCommand -Command ShowProjectItemStaged -Parameters $params
+
+    }
+} Export-ModuleMember -Function Show-GcProjectItemStaged
+
+function Reset-GcProjectItemStaged{
+    [cmdletbinding()]
+    param(
+        [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
+        )
+
+    $gcp = Get-GcProjects
+
+    foreach($project in $gcp.Values){
+        
+        $params = @{owner=$project.Owner; projectnumber=$project.ProjectNumber}
+
+        if(-Not [string]::IsNullOrEmpty($ItemId)){
+            $params.itemid = $ItemId
+            Invoke-MyCommand -Command ResetProjectItemStagedWithItem -Parameters $params
+        } else {
+            Invoke-MyCommand -Command ResetProjectItemStaged -Parameters $params
+        }
+    }
+
+} Export-ModuleMember -Function Reset-GcProjectItemStaged
