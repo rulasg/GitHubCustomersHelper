@@ -10,7 +10,7 @@ function Get-GcProjectItemStaged{
     [Alias("gcpis")]
     param()
 
-    $gcp = Get-GcProjects
+    $gcp = Get-GcProject
 
 
     foreach($project in $gcp.Values){
@@ -29,7 +29,7 @@ function Show-GcProjectItemStaged{
         [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
     )
 
-    $gcp = Get-GcProjects
+    $gcp = Get-GcProject
 
     foreach($project in $gcp.Values){
 
@@ -51,7 +51,7 @@ function Reset-GcProjectItemStaged{
         [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
         )
 
-    $gcp = Get-GcProjects
+    $gcp = Get-GcProject
 
     foreach($project in $gcp.Values){
         

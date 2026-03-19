@@ -9,7 +9,7 @@ function Get-AllItems{
         [Parameter()][switch]$Force
     )
 
-    $gcp = Get-GcProjects
+    $gcp = Get-GcProject
 
     $itemlist = @{}
 

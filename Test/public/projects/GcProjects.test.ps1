@@ -4,7 +4,7 @@ function Test_GetGcProjects {
 
     MockCallJson -Command "Find-Project -owner githubcustomers -pattern creator:testuser" -filename "testuser-find-project.json"
 
-    $projects = Get-GcProjects
+    $projects = Get-GcProject
 
     Assert-Count -Expected 16 -Presented $projects
 
@@ -23,7 +23,7 @@ function Test_GetGcProjects_Success{
     MockCall_GetGcProjects
 
     # Act
-    $result = Get-GcProjects
+    $result = Get-GcProject
 
     # Assert
     Assert-Count -Expected 3 -Presented $result.Keys
@@ -44,11 +44,11 @@ function Test_GetGcProjects_WithForce{
     MockCall_GetGcProjects
 
     # Act - First call
-    $result1 = Get-GcProjects
+    $result1 = Get-GcProject
     # Act - Second call without Force (should use cache)
-    $result2 = Get-GcProjects
+    $result2 = Get-GcProject
     # Act - Third call with Force (should refresh)
-    $result3 = Get-GcProjects -Force
+    $result3 = Get-GcProject -Force
 
     # Assert
     Assert-Count -Expected 3 -Presented $result1.Keys

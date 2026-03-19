@@ -2,7 +2,7 @@ Set-MyInvokeCommandAlias -Alias FindProjectByCreator -Command 'Find-Project -own
 
 class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidProjectNames}}
 
-function Get-GcProjects {
+function Get-GcProject {
     [CmdletBinding()]
     [Alias("gcp")]
     param(
@@ -60,21 +60,9 @@ function Get-GcProjects {
 
     return $ret
 
-} Export-ModuleMember -Function Get-GcProjects -Alias gcps
-
-function Get-GcProject{
-    [CmdletBinding()]
-    [Alias("gcp")]
-    param(
-        [Parameter(Mandatory,Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName
-    )
-
-    $projects = Get-GcProjects
-
-    return $projects.$ProjectName
-} Export-ModuleMember -Function Get-GcProject -Alias gcp
+} Export-ModuleMember -Function Get-GcProject -Alias gcps
 
 function GetValidProjectNames{
-    $projects = Get-GcProjects
+    $projects = Get-GcProject
     return $projects.keys
 } 
