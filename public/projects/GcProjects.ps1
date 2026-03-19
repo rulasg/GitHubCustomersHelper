@@ -4,7 +4,9 @@ class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerat
 
 function Get-GcProjects {
     [CmdletBinding()]
+    [Alias("gcp")]
     param(
+        [Parameter(Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName,
         [parameter()][switch]$IncludeClosed,
         [parameter()][switch]$Force
     )
@@ -17,9 +19,9 @@ function Get-GcProjects {
         handle = $me
     }
 
-    $cache = Get-GcDatabaseProjects -Owner $owner -Handle $me
-
-    if($Force -or ! $cache){
+    $list = Get-GcDatabaseProjects -Owner $owner -Handle $me
+    
+    if($Force -or ! $list){
 
         
         $result = Invoke-MyCommand -Command FindProjectByCreator -Parameters $params
@@ -47,13 +49,18 @@ function Get-GcProjects {
         # Save to cache
         Save-GcDatabaseProjects -Owner $owner -Handle $me -Value $list
 
-        $cache = Get-GcDatabaseProjects -Owner $owner -Handle $me
+        $list = Get-GcDatabaseProjects -Owner $owner -Handle $me
     }
 
-    
-    return $cache
+    if(-Not [string]::IsNullOrEmpty($ProjectName)){
+        $ret = $list.$ProjectName
+    } else {
+        $ret = $list
+    }
 
-} Export-ModuleMember -Function Get-GcProjects
+    return $ret
+
+} Export-ModuleMember -Function Get-GcProjects -Alias gcps
 
 function Get-GcProject{
     [CmdletBinding()]
