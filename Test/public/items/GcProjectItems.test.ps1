@@ -57,7 +57,6 @@ function MockCall_GetAllItems{
     MockCallToString -Command 'gh api user --jq ".login"' -OutString 'testuser'
     
     # Get-AllItems
-    MockCallJson -Command "Find-Project -owner githubcustomers -pattern creator:testuser" -filename "testuser-find-project-3.json"
+    MockCallJson -Command 'Find-Project -owner githubcustomers -pattern "creator:testuser"' -filename "testuser-find-project-3.json"
     MockCall_GetProject 2683 ; MockCall_GetProject 2988 ; MockCall_GetProject 3023
-
 }

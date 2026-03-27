@@ -1,4 +1,4 @@
-Set-MyInvokeCommandAlias -Alias FindProjectByCreator -Command 'Find-Project -owner {owner} -pattern creator:{handle}'
+Set-MyInvokeCommandAlias -Alias FindProjectByCreator -Command 'Find-Project -owner {owner} -pattern "{pattern}"'
 
 class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidProjectNames}}
 
@@ -8,23 +8,20 @@ function Get-GcProject {
     param(
         [Parameter(Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName,
         [parameter()][switch]$IncludeClosed,
+        [parameter()][switch]$All,
         [parameter()][switch]$Force
     )
 
-    $me = Get-MyHandle
     $owner = Get-OrgName
-
-    $params = @{
-        owner = $owner
-        handle = $me
-    }
+    $me = Get-MyHandle
+    $pattern = $All ? "" : "creator:$me"
 
     $list = Get-GcDatabaseProjects -Owner $owner -Handle $me
     
     if($Force -or ! $list){
 
-        
-        $result = Invoke-MyCommand -Command FindProjectByCreator -Parameters $params
+        # Find projects
+        $result = Invoke-MyCommand -Command FindProjectByCreator -Parameters @{ owner = $owner ; pattern = $pattern }
         
         # Filter closed projects
         # TODO: this filter is not working. Ignore the filter for the moment
@@ -35,15 +32,16 @@ function Get-GcProject {
         $list = @{}
 
         foreach($p in $filtered) {
-            $name = $p.title -replace '[^a-zA-Z0-9]', '_'
+            $key = $p.title -replace '[^a-zA-Z0-9]', '_'
             $n = [pscustomobject]@{
                 Title = $p.title
                 Owner = $owner
                 ProjectNumber = $p.number
                 Url = $p.url
+                Repos = $p.repositories.nodes.url
             }
 
-            $list.$name= $n
+            $list.$key= $n
         }
 
         # Save to cache
@@ -60,9 +58,20 @@ function Get-GcProject {
 
     return $ret
 
-} Export-ModuleMember -Function Get-GcProject -Alias gcps
+} Export-ModuleMember -Function Get-GcProject -Alias gcp
 
 function GetValidProjectNames{
     $projects = Get-GcProject
     return $projects.keys
-} 
+}
+
+function Show-GcProjects{
+    [CmdletBinding()]
+    [Alias("scp")]
+    param()
+
+    $projects = Get-GcProject
+
+    $projects.Values | Select-Object Title,ProjectNumber,Owner,Url
+
+} Export-ModuleMember -Function Show-GcProjects -Alias scp

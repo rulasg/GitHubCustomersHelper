@@ -1,12 +1,12 @@
 function Test_GetGcProjects {
 
-    MockCallToString -Command 'gh api user --jq ".login"' -OutString 'testuser'
+    # Arrange
+    MockCall_GetAllItems
 
-    MockCallJson -Command "Find-Project -owner githubcustomers -pattern creator:testuser" -filename "testuser-find-project.json"
-
+    # Act
     $projects = Get-GcProject
 
-    Assert-Count -Expected 16 -Presented $projects
+    Assert-Count -Expected 3 -Presented $projects
 
     # Pick one random and check the structure
     $testProject = $projects."BiT21"
@@ -20,7 +20,7 @@ function Test_GetGcProjects {
 function Test_GetGcProjects_Success{
 
     # Arrange
-    MockCall_GetGcProjects
+    MockCall_GetAllItems
 
     # Act
     $result = Get-GcProject
@@ -41,7 +41,7 @@ function Test_GetGcProjects_Success{
 function Test_GetGcProjects_WithForce{
 
     # Arrange
-    MockCall_GetGcProjects
+    MockCall_GetAllItems
 
     # Act - First call
     $result1 = Get-GcProject
@@ -54,9 +54,4 @@ function Test_GetGcProjects_WithForce{
     Assert-Count -Expected 3 -Presented $result1.Keys
     Assert-Count -Expected 3 -Presented $result2.Keys
     Assert-Count -Expected 3 -Presented $result3.Keys
-}
-
-function MockCall_GetGcProjects{
-    MockCallToString -Command 'gh api user --jq ".login"' -OutString 'testuser'
-    MockCallJson -Command "Find-Project -owner githubcustomers -pattern creator:testuser" -filename "testuser-find-project-3.json"
 }

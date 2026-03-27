@@ -30,5 +30,9 @@
   {
     "FileName": "testuser-search-repos.json",
     "Command": "Invoke-SearchRepo -SearchString \"org:githubcustomers props.SolutionEngineer:testuser\""
+  },
+  {
+    "FileName": "testuser-find-project-3.json",
+    "Command": "Find-Project -owner githubcustomers -pattern \"creator:testuser\""
   }
 ]
