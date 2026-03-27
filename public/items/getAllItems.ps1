@@ -9,6 +9,8 @@ function Get-AllItems{
         [Parameter()][switch]$Force
     )
 
+    ">>>" | Write-MyDebug -Section "Get-AllItems"
+
     $gcp = Get-GcProject
 
     $itemlist = @{}
@@ -41,6 +43,8 @@ function Get-AllItems{
             }
         }
     }
+
+    "<<<" | Write-MyDebug -Section "Get-AllItems"
 
     return $itemlist
 
