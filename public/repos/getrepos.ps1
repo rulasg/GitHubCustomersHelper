@@ -94,9 +94,13 @@ function Invoke-SearchRepo{
     $command = $command -replace "{searchstring}", "$($SearchString)"
     $command = $command -replace "{attributes}", "$($attributes)"
 
-    $command | Write-Verbose
+    "Calling >>> : " | Write-MyDebug -Object $command -Section "Invoke-SearchRepo"
 
-    $ret = Invoke-Expression $Command | ConvertFrom-Json
+    $response = Invoke-Expression $Command
+
+    "Response <<< : " | Write-MyDebug -object $response -Section "Invoke-SearchRepo"
+
+    $ret = $response | ConvertFrom-Json
 
     return $ret
 } Export-ModuleMember -Function Invoke-SearchRepo
