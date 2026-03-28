@@ -32,7 +32,7 @@ function Get-GcProjectItems{
 
     # ProjectName 
     if(-Not [string]::IsNullOrEmpty($ProjectName)){
-        $projectnumber = (Get-GcProject -ProjectName $ProjectName).ProjectNumber
+        $projectnumber = (getGcProject -ProjectName $ProjectName).ProjectNumber
     }
 
     # ProjectNumber filtering    if(-Not [string]::IsNullOrEmpty($ProjectNumber)){

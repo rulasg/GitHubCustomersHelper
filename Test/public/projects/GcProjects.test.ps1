@@ -9,7 +9,7 @@ function Test_GetGcProjects {
     Assert-Count -Expected 3 -Presented $projects
 
     # Pick one random and check the structure
-    $testProject = $projects."BiT21"
+    $testProject = $projects | Where-Object {$_.Title -eq "BiT21"}
     Assert-AreEqual -Expected "BiT21" -Presented $testProject.Title
     Assert-AreEqual -Expected "githubcustomers" -Presented $testProject.Owner
     Assert-AreEqual -Expected 2683 -Presented $testProject.ProjectNumber
@@ -26,32 +26,31 @@ function Test_GetGcProjects_Success{
     $result = Get-GcProject
 
     # Assert
-    Assert-Count -Expected 3 -Presented $result.Keys
-    Assert-Contains -Presented $result.Keys -Expected "Customer_1"
-    Assert-Contains -Presented $result.Keys -Expected "_TEMPLATE__Customer_Project"
-    Assert-Contains -Presented $result.Keys -Expected "BiT21"
+    Assert-Count -Expected 3 -Presented $result
+    Assert-Contains -Presented $result.Title -Expected "Customer_1"
+    Assert-Contains -Presented $result.Title -Expected "[TEMPLATE] Customer Project"
+    Assert-Contains -Presented $result.Title -Expected "BiT21"
     
     # Verify structure of one project
-    Assert-AreEqual -Expected "BiT21" -Presented $result.BiT21.Title
-    Assert-AreEqual -Expected "githubcustomers" -Presented $result.BiT21.Owner
-    Assert-AreEqual -Expected 2683 -Presented $result.BiT21.ProjectNumber
-    Assert-AreEqual -Expected "https://github.com/orgs/githubcustomers/projects/2683" -Presented $result.BiT21.Url
+    $testProject = $result | Where-Object {$_.Title -eq "BiT21"}
+
+    Assert-AreEqual -Expected "BiT21" -Presented $testProject.Title
+    Assert-AreEqual -Expected "githubcustomers" -Presented $testProject.Owner
+    Assert-AreEqual -Expected 2683 -Presented $testProject.ProjectNumber
+    Assert-AreEqual -Expected "https://github.com/orgs/githubcustomers/projects/2683" -Presented $testProject.Url
 }
 
-function Test_GetGcProjects_WithForce{
+function Test_GetGcProjects_Success_SingleProject{
 
     # Arrange
     MockCall_GetAllItems
 
-    # Act - First call
-    $result1 = Get-GcProject
-    # Act - Second call without Force (should use cache)
-    $result2 = Get-GcProject
-    # Act - Third call with Force (should refresh)
-    $result3 = Get-GcProject -Force
+    # Act
+    $result = Get-GcProject -ProjectName "BiT21"
 
-    # Assert
-    Assert-Count -Expected 3 -Presented $result1.Keys
-    Assert-Count -Expected 3 -Presented $result2.Keys
-    Assert-Count -Expected 3 -Presented $result3.Keys
+
+    Assert-AreEqual -Expected "BiT21" -Presented $result.Title
+    Assert-AreEqual -Expected "githubcustomers" -Presented $result.Owner
+    Assert-AreEqual -Expected 2683 -Presented $result.ProjectNumber
+    Assert-AreEqual -Expected "https://github.com/orgs/githubcustomers/projects/2683" -Presented $result.Url
 }

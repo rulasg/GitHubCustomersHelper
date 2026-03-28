@@ -11,7 +11,7 @@ function Get-AllItems{
 
     ">>>" | Write-MyDebug -Section "Get-AllItems"
 
-    $gcp = Get-GcProject
+    $gcp = getGcProject
 
     $itemlist = @{}
 

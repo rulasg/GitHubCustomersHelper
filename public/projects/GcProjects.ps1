@@ -11,12 +11,33 @@ function Get-GcProject {
         [parameter()][switch]$All,
         [parameter()][switch]$Force
     )
+    
+    $result = getGcProject -ProjectName $ProjectName -IncludeClosed:$IncludeClosed -All:$All -Force:$Force
+
+    $ret = @()
+    $result.Values | ForEach-Object {
+        $ret += [pscustomobject]$_
+    }
+    return $ret
+} Export-ModuleMember -Function Get-GcProject -Alias gcp
+
+
+function getGcProject {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)][string]$ProjectName,
+        [parameter()][switch]$IncludeClosed,
+        [parameter()][switch]$All,
+        [parameter()][switch]$Force
+    )
 
     $owner = Get-OrgName
     $me = Get-MyHandle
     $pattern = $All ? "" : "creator:$me"
 
     $list = Get-GcDatabaseProjects -Owner $owner -Handle $me
+
+    $ret = @{}
     
     if($Force -or ! $list){
 
@@ -51,18 +72,26 @@ function Get-GcProject {
     }
 
     if(-Not [string]::IsNullOrEmpty($ProjectName)){
-        $ret = $list.$ProjectName
+        $pn = $list.$ProjectName
+        if($null -eq $pn){
+            throw "Project '$ProjectName' not found."
+        }
+        $ret.$ProjectName = $pn
     } else {
-        $ret = $list
+        $ret += $list
     }
 
     return $ret
 
-} Export-ModuleMember -Function Get-GcProject -Alias gcp
+} Export-ModuleMember -Function getGcProject -Alias gcp
 
 function GetValidProjectNames{
-    $projects = Get-GcProject
-    return $projects.keys
+    $projects = getGcProject
+    $ret = $projects.keys
+
+    $ret += ""
+
+    return $ret
 }
 
 function Show-GcProjects{
@@ -70,7 +99,7 @@ function Show-GcProjects{
     [Alias("scp")]
     param()
 
-    $projects = Get-GcProject
+    $projects = getGcProject
 
     $projects.Values | Select-Object Title,ProjectNumber,Owner,Url
 
