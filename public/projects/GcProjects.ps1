@@ -21,6 +21,27 @@ function Get-GcProject {
     return $ret
 } Export-ModuleMember -Function Get-GcProject -Alias gcp
 
+function Set-GcProjectParameters{
+        [CmdletBinding()]
+    [Alias("scpp")]
+    param(
+        [Parameter(Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName,
+        [parameter()][switch]$Force
+    )
+
+    $prj = Get-GcProject -ProjectName $ProjectName -Force:$Force
+
+    if($prj.Count -eq 1){
+
+        "Found Gc Project [$ProjectName]. Setting project parameters for this session." | Write-MyDebug -Object $prj
+
+        ProjectHelper\Set-ProjectParameters -Owner $prj.Owner -ProjectNumber $prj.ProjectNumber
+    } else {
+        
+        "Project [$ProjectName] not found or multiple projects with the same name found. Please specify a valid project name." | Write-MyError
+    }
+
+} Export-ModuleMember -Function Set-GcProjectParameters -Alias scpp
 
 function getGcProject {
     [CmdletBinding()]
