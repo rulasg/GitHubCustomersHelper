@@ -25,3 +25,28 @@ function Get-GcProjectItem {
     }
 
 } Export-ModuleMember -Function Get-GcProjectItem -Alias gcpi
+
+function Get-GcProjectItemByUrl {
+    [CmdletBinding()]
+    [Alias ("gcpiu")]
+    param(
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName, ValueFromPipeline, Position = 0)][string]$Url
+    )
+
+    begin{
+        $all = Get-AllItems
+    }
+
+    process{
+
+        $item = $all.Values | Where-Object {$_.Url -eq $Url}
+
+        # Not found
+        if(-Not $item){
+            return
+        }
+
+        return $item
+    }
+
+} Export-ModuleMember -Function Get-GcProjectItemByUrl -Alias gcpiu
