@@ -30,15 +30,14 @@ function Show-GCProjectItem {
             @{Name = "n_Reason"     ; Value = $notification.Reason             ; Color = "Yellow"  ; Prefix = "" ; HideIfEmpty = $hideNotifications }
         )
 
-
         # Fields line
-        $fieldsToShow += @(
-            @{Name = "" ; Color = "White"; Prefix = "" ; BetweenQuotes = $false ; HideIfEmpty = $true }
+        $fields = @(
+            @{Name = "projectTitle" ; Color = "DarkBlue"; Prefix = "" ; BetweenBrackets = $true ; HideIfEmpty = $false }
 
             # @{Name = "MyType" }
             # @{Name = "Topic" }
             # NGZPS
-            # @{Name = "Status"         ; Value = $item.Status          ; Color = $statusColor                                             }
+            @{Name = "Status"         ; Value = $item.Status                                                       }
             # @{Name = "NextUp"         ; Value = $item.NextUp          ; Color = "Magenta"     ; Prefix = "NextUp:" ; HideIfEmpty = $true }
             # @{Name = $GTD_FIELD_NAME  ; Value = $item.$GTD_FIELD_NAME  ; Color = "Cyan"       ; Prefix = "GTD:"                          }
             # @{Name = "Size"           ; Value = $item.Size            ; Color = "DarkGreen"   ; Prefix = "Z:"                            }
@@ -52,7 +51,7 @@ function Show-GCProjectItem {
 
         #Empty line
         $fieldsToShow += @(
-            @{Name = "" ; Color = "White"; Prefix = "" ; BetweenQuotes = $false ; HideIfEmpty = $true }
+            @{Name = "" ; Color = "White"; Prefix = "" ; BetweenBrackets = $true; HideIfEmpty = $true }
         )
 
         $fieldsToShow += @(
@@ -90,7 +89,7 @@ function Show-GCProjectItem {
             OpenInEditor = $OpenInEditor
             OpenInBrowser = $OpenInBrowser
             ClearScreen = $ClearScreen
-            FieldsToShow = $fieldsToShow
+            FieldsToShow = $fields,$fieldsToShow
         }
 
         ProjectHelper\Show-ProjectItem @params
