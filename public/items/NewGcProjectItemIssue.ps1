@@ -22,6 +22,9 @@ function New-GcProjectItemIssue{
         return $null
     }
 
+    # TODO: Need to add the item to the proper project
+    # for this we need link project with repo
+
     if( $OpenOnCreation ) {
         Open-Url $url
     }
