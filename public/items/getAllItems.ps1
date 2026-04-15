@@ -6,6 +6,7 @@ function Get-AllItems{
     param(
         # force
         [Parameter()][switch]$IncludeDone,
+        [Parameter()][string]$ProjectName,
         [Parameter()][switch]$Force
     )
 
@@ -13,9 +14,12 @@ function Get-AllItems{
 
     $gcp = getGcProject
 
+    # Sync single project if specified
+    $plist = $gcp.$ProjectName ?? $gcp.Values
+
     $itemlist = @{}
 
-    foreach($project in $gcp.Values){
+    foreach($project in $plist){
 
         $params = @{owner=$project.Owner; ProjectNumber=$project.ProjectNumber}
 
