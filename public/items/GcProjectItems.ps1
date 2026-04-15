@@ -9,8 +9,6 @@ function Get-GcProjectItems{
     param(
         [Parameter(Position = 0)] [string[]]$Filter,
         [Parameter(Position = 1)][string[]]$Attributes,
-        [Parameter()][string]$ProjectOwner,
-        [Parameter()][string]$ProjectNumber,
         [Parameter()][switch]$IncludeDone,
         [Parameter()][switch]$Force,
         [Parameter()][switch]$PassThru,
@@ -18,21 +16,23 @@ function Get-GcProjectItems{
         # [Parameter()][switch]$AnyField,
         # [Parameter()][switch]$Exact
         
+        [Parameter()][string]$ProjectNumber,
+        
         [Parameter()][ValidateSet([ValidRepoNames])][string]$RepositoryName,
         [Parameter()][ValidateSet([ValidProjectNames])][string]$ProjectName
     )
 
-    $found = @((Get-AllItems -Force:$Force).Values)
+    $found = @((Get-AllItems -Force:$Force -ProjectName:$ProjectName).Values)
 
 
     # Owner and ProjectNumber filtering
-    if(-Not [string]::IsNullOrEmpty($Owner)){
-        $found = @($found | Where-Object {$_.projectOwner -eq $Owner})
+    if(-Not [string]::IsNullOrEmpty($ProjectNumber)){
+        $found = @($found | Where-Object {$_.projectNumber -eq $ProjectNumber})
     }
 
     # ProjectName 
     if(-Not [string]::IsNullOrEmpty($ProjectName)){
-        $projectnumber = (getGcProject -ProjectName $ProjectName).ProjectNumber
+        $projectnumber = (getGcProject -ProjectName $ProjectName).Values.ProjectNumber
     }
 
     # ProjectNumber filtering    if(-Not [string]::IsNullOrEmpty($ProjectNumber)){
