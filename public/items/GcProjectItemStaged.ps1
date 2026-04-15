@@ -3,6 +3,7 @@ Set-MyInvokeCommandAlias -Alias ShowProjectItemStaged -Command 'Show-ProjectItem
 Set-MyInvokeCommandAlias -Alias ShowProjectItemStagedWithItemId -Command 'Show-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber} -Id {itemid}'
 Set-MyInvokeCommandAlias -Alias ResetProjectItemStaged -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
 Set-MyInvokeCommandAlias -Alias ResetProjectItemStagedWithItem -Command 'Reset-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber} -Id {itemid}'
+Set-MyInvokeCommandAlias -Alias SyncProjectItemStaged -Command 'Sync-ProjectItemStaged -owner {owner} -ProjectNumber {projectnumber}'
 
 
 function Get-GcProjectItemStaged{
@@ -66,3 +67,22 @@ function Reset-GcProjectItemStaged{
     }
 
 } Export-ModuleMember -Function Reset-GcProjectItemStaged -Alias rcpis
+
+function Sync-GcProjectItemStaged{
+    [cmdletbinding()]
+    [Alias("ccommit")]
+    param(
+        [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
+        )
+
+    $gcp = getGcProject
+
+    foreach($project in $gcp.Values){
+        
+        $params = @{owner=$project.Owner; projectnumber=$project.ProjectNumber}
+
+        Invoke-MyCommand -Command SyncProjectItemStaged -Parameters $params
+
+    }
+
+} Export-ModuleMember -Function Sync-GcProjectItemStaged -Alias ccommit
