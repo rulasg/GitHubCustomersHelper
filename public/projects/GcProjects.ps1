@@ -21,6 +21,34 @@ function Get-GcProject {
     return $ret
 } Export-ModuleMember -Function Get-GcProject -Alias gcp
 
+function Open-GcProject{
+    [CmdletBinding()]
+    [Alias("ocp")]
+    param(
+        [Parameter(Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName
+    )
+
+    $p = Get-GcProject -ProjectName $ProjectName
+
+    ProjectHelper\Open-Project -Owner $p.Owner -ProjectNumber $p.ProjectNumber
+
+} Export-ModuleMember -Function Open-GcProject -Alias ocp
+
+function Update-GcProject{
+    [CmdletBinding()]
+    [Alias("ucp")]
+    param(
+        [Parameter()][string]$Handle
+    )
+
+    $Handle = [string]::IsNullOrEmpty($Handle) ? $(Get-MyHandle) : $Handle
+
+    $gcp = getGcProject -Force -Handle $Handle
+
+    "Updated Gc Projects for handle [$Handle]. Found $($gcp.Count) projects." | Write-MyHost
+
+} Export-ModuleMember -Function Update-GcProject -Alias ucp
+
 function Set-GcProjectParameters{
         [CmdletBinding()]
     [Alias("scpp")]
@@ -47,13 +75,14 @@ function getGcProject {
     [CmdletBinding()]
     param(
         [Parameter(Position = 0)][string]$ProjectName,
+        [Parameter()][string]$Handle,
         [parameter()][switch]$IncludeClosed,
         [parameter()][switch]$All,
         [parameter()][switch]$Force
     )
 
     $owner = Get-OrgName
-    $me = Get-MyHandle
+    $me = [string]::IsNullOrEmpty($Handle) ? $(Get-MyHandle) : $Handle
     $pattern = $All ? "" : "creator:$me"
 
     $list = Get-GcDatabaseProjects -Owner $owner -Handle $me
