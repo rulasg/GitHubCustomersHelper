@@ -18,8 +18,8 @@ function Get-GcProjectItems{
         
         [Parameter()][string]$ProjectNumber,
         
-        [Parameter()][ValidateSet([ValidRepoNames])][string]$RepositoryName,
-        [Parameter()][ValidateSet([ValidProjectNames])][string]$ProjectName
+        [Parameter()][ValidateSet([ValidRepoNames])][Alias("R")][string]$RepositoryName,
+        [Parameter()][ValidateSet([ValidProjectNames])][Alias("P")][string]$ProjectName
     )
 
     $found = @((Get-AllItems -Force:$Force -ProjectName:$ProjectName).Values)

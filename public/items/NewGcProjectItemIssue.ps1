@@ -5,10 +5,9 @@ function New-GcProjectItemIssue{
     [Alias("ncpi")]
     param(
         #ProjectOwner
-        [Parameter()][ValidateSet([ValidRepoNames])][string]$RepositoryName,
-
-        [Parameter(Mandatory, Position = 3)][string]$Title,
-        [Parameter(Position = 4)][string]$Body,
+        [Parameter(Mandatory,Position = 0)][ValidateSet([ValidRepoNames])][Alias("R")][string]$RepositoryName,
+        [Parameter(Mandatory, Position = 1)][Alias("T")][string]$Title,
+        [Parameter(Position = 2)][Alias("B")][string]$Body,
         [Parameter()][switch]$OpenOnCreation
     )
 

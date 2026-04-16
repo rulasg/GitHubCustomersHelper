@@ -1,4 +1,4 @@
-function Update-ProjectItem{
+function Update-GcProjectItem{
     [CmdletBinding()]
     [Alias("ucpi")]
     param(
@@ -15,4 +15,4 @@ function Update-ProjectItem{
 
         return $response
     }
-} Export-ModuleMember -Function Update-ProjectItem -Alias("ucpi")
+} Export-ModuleMember -Function Update-GcProjectItem -Alias("ucpi")
