@@ -4,7 +4,7 @@ function Test_GetGcReposMy_Success{
     MockCall_GetGcReposMy
 
     # Act
-    $result = Get-GcReposMy
+    $result = Get-GcRepo
 
     # Assert
     Assert-Count -Expected 22 -Presented $result.Keys
@@ -22,11 +22,11 @@ function Test_GetGcReposMy_WithForce{
     MockCall_GetGcReposMy
 
     # Act - First call
-    $result1 = Get-GcReposMy
+    $result1 = Get-GcRepo
     # Act - Second call without Force (should use cache)
-    $result2 = Get-GcReposMy
+    $result2 = Get-GcRepo
     # Act - Third call with Force (should refresh)
-    $result3 = Get-GcReposMy -Force
+    $result3 = Get-GcRepo -Force
 
     # Assert
     Assert-Count -Expected 22 -Presented $result1.Keys
@@ -40,7 +40,7 @@ function Test_GetGcRepos_Success{
     MockCall_SearchRepos
 
     # Act
-    $result = Get-GcRepos -PropertyValue "testuser"
+    $result = Get-GcRepo -Handle "testuser"
 
     # Assert
     Assert-Count -Expected 22 -Presented $result.Keys

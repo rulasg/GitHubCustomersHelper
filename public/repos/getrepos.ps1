@@ -3,19 +3,57 @@ Set-MyInvokeCommandAlias -Alias SearchRepos -Command 'Invoke-SearchRepo -SearchS
 
 class ValidRepoNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidRepoNames}}
 
-function Get-GcReposMy{
+
+function Get-GcRepo{
     [CmdletBinding()]
     param(
+        [Parameter(Position=0)][ValidateSet([ValidRepoNames])][string]$Name,
+        [Parameter(Position=1)][string]$Handle,
         [Parameter()][switch]$Force
     )
 
-    $handle = Get-MyHandle
+    $Handle = [string]::IsNullOrEmpty($Handle) ? $(Get-MyHandle) : $Handle
 
-    $ret = Get-GcRepos -PropertyValue $handle -Force:$Force
+    $list = Get-GcReposByProperty -PropertyValue $Handle -Force:$Force
 
-    return $ret
+    if(-Not [string]::IsNullOrEmpty($Name)){
+        return $list.$Name
+    } else {
+        return $list
+    }
 
-} Export-ModuleMember -Function Get-GcReposMy
+} Export-ModuleMember -Function Get-GcRepo
+
+function Show-GcRepos{
+    [CmdletBinding()]
+    [Alias("scr")]
+    param(
+        [Parameter(Position=0)][string]$Handle,
+        [Parameter()][switch]$Force
+    )
+
+    $list = Get-GcRepo -Handle $Handle -Force:$Force
+
+    $list | format-table
+    
+} Export-ModuleMember -Function Show-GcRepos -Alias scr
+
+function Update-GcRepos{
+    [CmdletBinding()]
+    [Alias("ucr")]
+    param(
+        [Parameter(Position=0)][string]$Handle
+    )
+
+    if([string]::IsNullOrEmpty($Handle)){
+        $Handle = Get-MyHandle
+    }
+
+    $reuslt = Get-GcReposByProperty -PropertyValue $Handle -Force:$true
+
+    "Updated Gc Repos for handle [$Handle]. Found $($reuslt.Count) repos." | Write-MyHost
+
+} Export-ModuleMember -Function Update-GcRepos -Alias ucr
 
 <#
 .SYNOPSIS
@@ -26,7 +64,7 @@ Gets the GitHubCustomers repository owned by a particular SolutionEngineer
 .PARAMETER Handle
 The GitHub handle of the SolutionEngineer Custom Property value of the repository owner
 #>
-function Get-GcRepos {
+function Get-GcReposByProperty {
     param (
         [Parameter(Mandatory,Position=0)][string]$PropertyValue,
         [Parameter()][string]$PropertyName = 'SolutionEngineer',
@@ -69,17 +107,20 @@ function Get-GcRepos {
     #return cache
     return $cache
 
-} Export-ModuleMember -Function Get-GcRepos
+} Export-ModuleMember -Function Get-GcReposByProperty
 
-function Get-GcRepo{
+function Open-GcRepo{
     [CmdletBinding()]
+    [Alias("ocr")]
     param(
         [Parameter(Mandatory,Position=0)][ValidateSet([ValidRepoNames])][string]$Name
     )
 
-    $repos = Get-GcReposMy
-    return $repos.$Name
-} Export-ModuleMember -Function Get-GcRepo
+    $repo = Get-GcRepo -Name $Name
+
+    $repo.url | Open-MyUrl
+
+} Export-ModuleMember -Function Open-GcRepo -Alias ocr
 
 function Invoke-SearchRepo{
     [CmdletBinding()]
@@ -107,6 +148,6 @@ function Invoke-SearchRepo{
 
 function GetValidRepoNames{
 
-    $repos = Get-GcReposMy
+    $repos = Get-GcRepo
     return $repos.keys
 } 
