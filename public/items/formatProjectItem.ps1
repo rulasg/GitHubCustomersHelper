@@ -8,7 +8,7 @@ function Format-ProjectItem{
 
     begin {
         if([string]::IsNullOrWhiteSpace($Attributes)){
-            $Attributes = @("id","Title","RepositoryName")
+            $Attributes = @("id","Title","Status","RepositoryName")
         }
     }
 
