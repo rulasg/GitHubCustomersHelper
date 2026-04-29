@@ -34,9 +34,9 @@ function Open-GcProject{
 
 } Export-ModuleMember -Function Open-GcProject -Alias ocp
 
-function Update-GcProject{
+function Update-GcProjectList{
     [CmdletBinding()]
-    [Alias("ucp")]
+    [Alias("ucpl")]
     param(
         [Parameter()][string]$Handle
     )
@@ -47,7 +47,7 @@ function Update-GcProject{
 
     "Updated Gc Projects for handle [$Handle]. Found $($gcp.Count) projects." | Write-MyHost
 
-} Export-ModuleMember -Function Update-GcProject -Alias ucp
+} Export-ModuleMember -Function Update-GcProjectList -Alias ucpl
 
 function Set-GcProjectParameters{
         [CmdletBinding()]

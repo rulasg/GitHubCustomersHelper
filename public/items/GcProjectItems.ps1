@@ -1,11 +1,42 @@
 
+Set-MyInvokeCommandAlias -Alias UpdateProject -Command 'Update-Project -owner {owner} -projectNumber {projectnumber}'
+
 class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidProjectNames}}
 class ValidRepoNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidRepoNames}}
 
+function Update-GcProject{
+    [CmdletBinding()]
+    param(
+        [Parameter()][switch]$IncludeDone,
+        [Parameter()][switch]$Force,
+        
+        [Parameter()][string]$ProjectNumber,
+        
+        [Parameter()][ValidateSet([ValidRepoNames])][Alias("R")][string]$RepositoryName,
+        [Parameter()][ValidateSet([ValidProjectNames])][Alias("P")][string]$ProjectName
+    )
+
+    ">>>" | Write-MyDebug -Section "Update-GcProject"
+
+    $gcp = getGcProject
+
+    # Sync single project if specified
+    $plist = $gcp.$ProjectName ?? $gcp.Values
+
+    foreach($project in $plist){
+
+        $params = @{
+            owner=$project.Owner
+            projectnumber=$project.ProjectNumber
+        }
+
+        $result = Invoke-MyCommand -Command UpdateProject -Parameters $params
+
+    }
+} Export-ModuleMember -Function Update-GcProject
 
 function Get-GcProjectItems{
     [CmdletBinding()]
-    [Alias ("scpi")]
     param(
         [Parameter(Position = 0)] [string[]]$Filter,
         [Parameter(Position = 1)][string[]]$Attributes,
@@ -65,4 +96,45 @@ function Get-GcProjectItems{
     }
 
     return $ret
-} Export-ModuleMember -Function Get-GcProjectItems -Alias scpi
+} Export-ModuleMember -Function Get-GcProjectItems
+
+function Search-GcProjectItems{
+    [CmdletBinding()]
+    [Alias ("scpi")]
+    param(
+        [Parameter(Position = 0)] [string[]]$Filter,
+        [Parameter(Position = 1)][string[]]$Attributes,
+        [Parameter()][switch]$IncludeDone,
+        [Parameter()][switch]$Force,
+        [Parameter()][switch]$PassThru,
+        # [Parameter()][string]$FieldName,
+        # [Parameter()][switch]$AnyField,
+        # [Parameter()][switch]$Exact
+        
+        [Parameter()][string]$ProjectNumber,
+        
+        [Parameter()][ValidateSet([ValidRepoNames])][Alias("R")][string]$RepositoryName,
+        [Parameter()][ValidateSet([ValidProjectNames])][Alias("P")][string]$ProjectName
+    )
+
+    $defaultAttributes = @("id","sf_Id","Title","Current Owner","sf_Solutions_Engineer")
+    $attr = $defaultAttributes + $Attributes | Select-Object -Unique
+
+    $params = @{
+        Filter = $Filter
+        Attributes = $attr
+        IncludeDone = $IncludeDone
+        Force = $Force.IsPresent
+        PassThru = $PassThru.IsPresent
+        ProjectNumber = $ProjectNumber
+        ProjectName = $ProjectName
+    }
+
+    if(-Not [string]::IsNullOrWhiteSpace($RepositoryName)){
+        $params.RepositoryName = $RepositoryName
+    }
+
+    $list =  Get-GcProjectItems @params
+
+    return $list | ft
+} Export-ModuleMember -Function Search-GcProjectItems -Alias scpi
