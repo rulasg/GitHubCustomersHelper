@@ -38,7 +38,7 @@ function Show-GcRepos{
     
 } Export-ModuleMember -Function Show-GcRepos -Alias scr
 
-function Update-GcRepos{
+function Update-GcRepoList{
     [CmdletBinding()]
     [Alias("ucr")]
     param(
@@ -53,7 +53,7 @@ function Update-GcRepos{
 
     "Updated Gc Repos for handle [$Handle]. Found $($reuslt.Count) repos." | Write-MyHost
 
-} Export-ModuleMember -Function Update-GcRepos -Alias ucr
+} Export-ModuleMember -Function Update-GcRepoList -Alias ucr
 
 <#
 .SYNOPSIS
