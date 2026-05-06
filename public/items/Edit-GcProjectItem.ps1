@@ -40,11 +40,11 @@ function Edit-GcProjectItem {
         # Content
         [Parameter()][Alias("T")][string]$Title,
         [Parameter()][Alias("B")][string]$Body,
-        # [Parameter()][Alias("C")][string]$Comment,
         # [Parameter()][Alias("Fl")][string]$Flag,
-
+        
         # Comment
-
+        [Parameter()][Alias("C")][string]$Comment,
+        
         # AddComment
         [Parameter()][Alias("AC")][string]$AddComment,
 
@@ -314,7 +314,6 @@ function Edit-GcProjectItem {
         # Comment parameter
         if (-Not [string]::IsNullOrWhiteSpace($Comment)) {
             $fields."Comment" = $Comment
-            $Comment = ""
         }
 
         # # Flag parameter
