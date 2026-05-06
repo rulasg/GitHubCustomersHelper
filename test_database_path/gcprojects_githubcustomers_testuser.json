@@ -1,0 +1,23 @@
+{
+  "Customer_1": {
+    "Title": "Customer_1",
+    "Owner": "githubcustomers",
+    "ProjectNumber": 3023,
+    "Url": "https://github.com/orgs/githubcustomers/projects/3023",
+    "Repos": null
+  },
+  "BiT21": {
+    "Title": "BiT21",
+    "Owner": "githubcustomers",
+    "ProjectNumber": 2683,
+    "Url": "https://github.com/orgs/githubcustomers/projects/2683",
+    "Repos": "https://github.com/githubcustomers/bit21"
+  },
+  "_TEMPLATE__Customer_Project": {
+    "Title": "[TEMPLATE] Customer Project",
+    "Owner": "githubcustomers",
+    "ProjectNumber": 2988,
+    "Url": "https://github.com/orgs/githubcustomers/projects/2988",
+    "Repos": null
+  }
+}
