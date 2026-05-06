@@ -136,5 +136,5 @@ function Search-GcProjectItems{
 
     $list =  Get-GcProjectItems @params
 
-    return $list | ft
+    return $list
 } Export-ModuleMember -Function Search-GcProjectItems -Alias scpi
