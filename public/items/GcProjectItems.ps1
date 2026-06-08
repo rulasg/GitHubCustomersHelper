@@ -1,5 +1,5 @@
 
-Set-MyInvokeCommandAlias -Alias UpdateProject -Command 'Update-Project -owner {owner} -projectNumber {projectnumber}'
+Set-MyInvokeCommandAlias -Alias UpdateProject -Command 'ProjectHelper\Update-Project -owner {owner} -projectNumber {projectnumber}'
 
 class ValidProjectNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidProjectNames}}
 class ValidRepoNames : System.Management.Automation.IValidateSetValuesGenerator { [String[]] GetValidValues() { return GetValidRepoNames}}
@@ -32,6 +32,9 @@ function Update-GcProject{
 
         $result = Invoke-MyCommand -Command UpdateProject -Parameters $params
 
+        if(-not $result){
+            "Failed to update project [$($project.ProjectName)]." | Write-MyError
+        }
     }
 } Export-ModuleMember -Function Update-GcProject
 
@@ -117,7 +120,7 @@ function Search-GcProjectItems{
         [Parameter()][ValidateSet([ValidProjectNames])][Alias("P")][string]$ProjectName
     )
 
-    $defaultAttributes = @("id","sf_Id","Title","Current Owner","sf_Solutions_Engineer")
+    $defaultAttributes = @("id","RepositoryName","Title","Url")
     $attr = $defaultAttributes + $Attributes | Select-Object -Unique
 
     $params = @{
