@@ -34,7 +34,7 @@ function Get-GcProjectItemByUrl {
     )
 
     begin{
-        $all = Get-AllItems
+        $all = Get-AllItems -IncludeDone
     }
 
     process{
