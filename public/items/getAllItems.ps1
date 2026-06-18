@@ -44,6 +44,8 @@ function Get-AllItems{
                 Title = $item.title
                 State = $item.state
                 Url = $item.url
+                updatedAt = $item.updatedAt
+                createdAt = $item.createdAt
             }
         }
     }
