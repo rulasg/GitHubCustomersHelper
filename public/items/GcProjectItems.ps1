@@ -6,6 +6,7 @@ class ValidRepoNames : System.Management.Automation.IValidateSetValuesGenerator 
 
 function Update-GcProject{
     [CmdletBinding()]
+    [Alias("ugp")]
     param(
         [Parameter()][switch]$IncludeDone,
         [Parameter()][switch]$Force,
@@ -36,7 +37,7 @@ function Update-GcProject{
             "Failed to update project [$($project.ProjectName)]." | Write-MyError
         }
     }
-} Export-ModuleMember -Function Update-GcProject
+} Export-ModuleMember -Function Update-GcProject -Alias ugp
 
 function Get-GcProjectItems{
     [CmdletBinding()]
