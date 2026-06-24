@@ -21,6 +21,18 @@ function Get-GcProject {
     return $ret
 } Export-ModuleMember -Function Get-GcProject -Alias gcp
 
+function Get-GcProjects {
+    [CmdletBinding()]
+    param(
+        [parameter()][switch]$IncludeClosed,
+        [parameter()][switch]$Force
+    )
+    
+    $ret = getGcProject -IncludeClosed:$IncludeClosed -Force:$Force
+
+    return $ret
+} Export-ModuleMember -Function Get-GcProjects
+
 function Open-GcProject{
     [CmdletBinding()]
     [Alias("ocp")]
@@ -53,7 +65,7 @@ function Set-GcProjectParameters{
         [CmdletBinding()]
     [Alias("scpp")]
     param(
-        [Parameter(Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName,
+        [Parameter(Mandatory,Position = 0)][ValidateSet([ValidProjectNames])][string]$ProjectName,
         [parameter()][switch]$Force
     )
 
