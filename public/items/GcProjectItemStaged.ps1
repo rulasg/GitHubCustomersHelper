@@ -72,7 +72,7 @@ function Reset-GcProjectItemStaged{
 
 function Sync-GcProjectItemStaged{
     [cmdletbinding()]
-    [Alias("ccommit")]
+    [Alias("ccommit","yyc")]
     param(
         [Parameter(ValueFromPipelineByPropertyName)][Alias("id")][string]$ItemId
         )
@@ -90,4 +90,4 @@ function Sync-GcProjectItemStaged{
         }
     }
 
-} Export-ModuleMember -Function Sync-GcProjectItemStaged -Alias ccommit
+} Export-ModuleMember -Function Sync-GcProjectItemStaged -Alias ccommit,yyc
