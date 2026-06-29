@@ -66,7 +66,7 @@ function Set-GcRepoCollaboratorsYaml{
         [Parameter(Mandatory,ValueFromPipeline)][string]$Yaml
     )
     $Content = $Yaml
-    $repoOwner = "githubcustomers"
+    $owner = "githubcustomers"
     $path = ".github/collaborators.yml"
     $branch = "update-collaborators-$(Get-Date -Format yyyyMMddHHmmss)"
 
@@ -75,15 +75,15 @@ function Set-GcRepoCollaboratorsYaml{
 
     # 1) Get default branch and its latest commit SHA
     # 2) Create new branch from default branch tip
-    New-RepoBranch -owner $repoOwner -Repo $Repo -NewBranch $branch -baseBranch $defaultBranch
+    New-RepoBranch -owner $owner -Repo $Repo -NewBranch $branch -baseBranch $defaultBranch
 
     # 3) Prepare base64 content
     # 4) If file exists, get SHA (required for update)
     # 5) Create/update file in that branch
-    Set-RepoFile -Owner $repoOwner -Repo $Repo -Content $Content -path $path -branch $branch
+    Set-RepoFile -Owner $owner -Repo $Repo -Content $Content -path $path -branch $branch
 
     # 6) Create a pull request for the new branch
-    gh pr create --repo "$Owner/$Repo" --base "$defaultBranch" --head "$branch" --title "Update $path" --body "Automated update via gh api."
+    gh pr create --repo "$owner/$Repo" --base "$defaultBranch" --head "$branch" --title "Update $path" --body "Automated update via gh api."
 
 } Export-ModuleMember -Function Set-GcRepoCollaboratorsYaml
 
